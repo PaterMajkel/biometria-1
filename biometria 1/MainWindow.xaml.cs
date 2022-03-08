@@ -90,7 +90,13 @@ public partial class MainWindow : Window
         RedLabel.Content = $"Red Value: {RedValue.Value}";
         if (meanValueChanges)
             return;
+        if (this.flag == BitmapFlags.Image)
+        {
+            Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
+            bitmap = (Bitmap)this.sourceImage.Clone();
+            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)RedValue.Value, 2));
 
+        }
     }
 
     private void BlueValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -98,6 +104,13 @@ public partial class MainWindow : Window
         BlueLabel.Content = $"Blue Value: {BlueValue.Value}";
         if (meanValueChanges)
             return;
+        if (this.flag == BitmapFlags.Image)
+        {
+            Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
+            bitmap = (Bitmap)this.sourceImage.Clone();
+            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)BlueValue.Value, 0));
+
+        }
     }
 
     private void GreenValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -107,7 +120,9 @@ public partial class MainWindow : Window
             return;
         if (this.flag == BitmapFlags.Image)
         {
-            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(this.sourceImage, (byte)GreenValue.Value,  2));
+            Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
+            bitmap = (Bitmap)this.sourceImage.Clone();
+            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)GreenValue.Value,  1));
 
         }
     }
@@ -119,7 +134,9 @@ public partial class MainWindow : Window
         GreenValue.Value = RedValue.Value = BlueValue.Value = MeanValue.Value;
         if (this.flag == BitmapFlags.Image)
         {
-            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(this.sourceImage, (byte)MeanValue.Value, 4));
+            Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
+            bitmap = (Bitmap)this.sourceImage.Clone();
+            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)MeanValue.Value));
 
         }
         meanValueChanges = false;

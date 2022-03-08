@@ -94,7 +94,7 @@ public static class Algorithm
                     }
                 case 2:
                     {
-                        bmpData[i + 1] =
+                        bmpData[i + 2] =
                         b > threshold
                             ? byte.MaxValue
                             : byte.MinValue;
