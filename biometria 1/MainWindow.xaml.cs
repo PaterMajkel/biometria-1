@@ -113,7 +113,7 @@ public partial class MainWindow : Window
     private void RedValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if(!CheckIfFile()) return;
-        RedLabel.Content = $"Red Value: {Math.Round(RedValue.Value).ToString()}";
+        RedLabel.Content = $"Red Value: {Math.Round(RedValue.Value)}";
         if (meanValueChanges)
             return;
 
@@ -136,7 +136,7 @@ public partial class MainWindow : Window
     private void BlueValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if(!CheckIfFile()) return;
-        BlueLabel.Content = $"Blue Value: {Math.Round(BlueValue.Value).ToString()}";
+        BlueLabel.Content = $"Blue Value: {Math.Round(BlueValue.Value)}";
         if (meanValueChanges)
             return;
         if (this.flag == BitmapFlags.Image)
@@ -159,7 +159,7 @@ public partial class MainWindow : Window
     private void GreenValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if(!CheckIfFile()) return;
-        GreenLabel.Content = $"Green Value: {Math.Round(GreenValue.Value).ToString()}";
+        GreenLabel.Content = $"Green Value: {Math.Round(GreenValue.Value)}";
         if (meanValueChanges)
             return;
         if (this.flag == BitmapFlags.Image)
