@@ -14,8 +14,8 @@ namespace biometria_1;
 
 public enum BitmapFlags
 {
-    Image=1,
-    Histogram=2,
+    Image = 1,
+    Histogram = 2,
 }
 
 /// <summary>
@@ -28,7 +28,7 @@ public partial class MainWindow : Window
     Bitmap sourceImage = null;
     BitmapFlags flag = BitmapFlags.Image;
     Bitmap finalImage;
-    bool meanValueChanges=false;
+    bool meanValueChanges = false;
     public MainWindow()
     {
         InitializeComponent();
@@ -66,7 +66,7 @@ public partial class MainWindow : Window
 
     private void SaveFile(object sender, RoutedEventArgs e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
 
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         saveFileDialog.Filter = "Images|*.png;*.bmp;*.jpg";
@@ -112,7 +112,7 @@ public partial class MainWindow : Window
 
     private void RedValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         RedLabel.Content = $"Red Value: {Math.Round(RedValue.Value)}";
         if (meanValueChanges)
             return;
@@ -121,7 +121,7 @@ public partial class MainWindow : Window
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            finalImage=BinaryThreshold(bitmap, (byte)RedValue.Value, 2);
+            finalImage = BinaryThreshold(bitmap, (byte)RedValue.Value, 2);
             ReadyImage.Source = ImageSourceFromBitmap(finalImage);
         }
         else
@@ -135,7 +135,7 @@ public partial class MainWindow : Window
 
     private void BlueValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         BlueLabel.Content = $"Blue Value: {Math.Round(BlueValue.Value)}";
         if (meanValueChanges)
             return;
@@ -143,7 +143,7 @@ public partial class MainWindow : Window
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            finalImage=BinaryThreshold(bitmap, (byte)BlueValue.Value, 0);
+            finalImage = BinaryThreshold(bitmap, (byte)BlueValue.Value, 0);
             ReadyImage.Source = ImageSourceFromBitmap(finalImage);
 
         }
@@ -158,7 +158,7 @@ public partial class MainWindow : Window
 
     private void GreenValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         GreenLabel.Content = $"Green Value: {Math.Round(GreenValue.Value)}";
         if (meanValueChanges)
             return;
@@ -166,21 +166,21 @@ public partial class MainWindow : Window
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            finalImage=BinaryThreshold(bitmap, (byte)GreenValue.Value,  1);
+            finalImage = BinaryThreshold(bitmap, (byte)GreenValue.Value, 1);
             ReadyImage.Source = ImageSourceFromBitmap(finalImage);
         }
         else
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            finalImage = Histogram(bitmap,1);
+            finalImage = Histogram(bitmap, 1);
             ReadyImage.Source = ImageSourceFromBitmap(finalImage);
         }
     }
 
     private void MeanValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         meanValueChanges = true;
         MeanLabel.Content = $"Mean Value: {Math.Round(MeanValue.Value).ToString()}";
         GreenValue.Value = RedValue.Value = BlueValue.Value = MeanValue.Value;
@@ -203,7 +203,7 @@ public partial class MainWindow : Window
 
     private void RedBtn(object sender, RoutedEventArgs e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
         bitmap = (Bitmap)this.sourceImage.Clone();
         finalImage = Histogram(bitmap, 2);
@@ -212,7 +212,7 @@ public partial class MainWindow : Window
 
     private void BlueBtn(object sender, RoutedEventArgs e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
         bitmap = (Bitmap)this.sourceImage.Clone();
         finalImage = Histogram(bitmap, 0);
@@ -221,7 +221,7 @@ public partial class MainWindow : Window
 
     private void GreenBtn(object sender, RoutedEventArgs e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
         bitmap = (Bitmap)this.sourceImage.Clone();
         finalImage = Histogram(bitmap, 1);
@@ -229,7 +229,7 @@ public partial class MainWindow : Window
     }
     private void MeanBtn(object sender, RoutedEventArgs e)
     {
-        if(!CheckIfFile()) return;
+        if (!CheckIfFile()) return;
         Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
         bitmap = (Bitmap)this.sourceImage.Clone();
         finalImage = Histogram(bitmap);
@@ -238,7 +238,7 @@ public partial class MainWindow : Window
 
     public bool CheckIfFile()
     {
-        if(sourceImage == null)
+        if (sourceImage == null)
         {
             MessageBox.Show("No image added", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return false;
