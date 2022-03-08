@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -19,14 +20,21 @@ using System.Windows.Shapes;
 
 namespace biometria_1;
 
+public enum BitmapFlags
+{
+    Image=1,
+    Histogram=2,
+}
+
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow : Window
 {
 
-    string? SourceLink = null;
+    string fileType = "";
     Bitmap sourceImage = null;
+    BitmapFlags flag = BitmapFlags.Image;
 
     public MainWindow()
     {
@@ -36,11 +44,13 @@ public partial class MainWindow : Window
     private void OpenFile(object sender, RoutedEventArgs e)
     {
         OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
         if (openFileDialog.ShowDialog() == true)
         {
             string fileName = openFileDialog.FileName;
             this.sourceImage = new Bitmap($"{fileName}");
             ReadyImage.Source = ImageSourceFromBitmap(this.sourceImage);
+            this.fileType = fileName.Split('.').Last();
         }
     }
 
@@ -55,6 +65,33 @@ public partial class MainWindow : Window
             return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
         finally { DeleteObject(handle); }
+    }
+
+    private void SaveFile(object sender, RoutedEventArgs e)
+    {
+        if(this.sourceImage == null)
+        {
+            MessageBox.Show("No image to save", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        if (saveFileDialog.ShowDialog() == true)
+            sourceImage.Save(saveFileDialog.FileName+this.fileType);
+    }
+
+    private void Exit(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+    }
+
+    private void SetFlagToHistogram(object sender, RoutedEventArgs e)
+    {
+        flag = BitmapFlags.Histogram;
+    }
+
+    private void SetFlagToImage(object sender, RoutedEventArgs e)
+    {
+        flag = BitmapFlags.Image;
     }
 
     private void RedValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
