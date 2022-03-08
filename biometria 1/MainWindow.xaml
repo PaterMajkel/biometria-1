@@ -11,9 +11,9 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="OpenFile" />
-                <MenuItem Header="_Save" />
+                <MenuItem Header="_Save" Click="SaveFile" />
                 <Separator />
-                <MenuItem Header="_Exit" />
+                <MenuItem Header="_Exit" Click="Exit" />
             </MenuItem>
             <MenuItem Header="_Mode">
                 <MenuItem Header="_Histogram" />
@@ -33,7 +33,7 @@
             </Grid.RowDefinitions>
 
 
-            <Image Name="ReadyImage" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Source="kot.jpg" Stretch="Fill"></Image>
+            <Image Name="ReadyImage" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Stretch="Fill"></Image>
 
             <Slider Name="RedValue" Grid.Row="0" Grid.Column="1" Margin="0,40,0,0"></Slider>
             <Label Name="RedLabel" Grid.Row="0" Grid.Column="1" Content="Red Value: 0"/>
