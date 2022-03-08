@@ -1,22 +1,13 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static biometria_1.Algorithm;
 
 namespace biometria_1;
 
@@ -35,7 +26,7 @@ public partial class MainWindow : Window
     string fileType = "";
     Bitmap sourceImage = null;
     BitmapFlags flag = BitmapFlags.Image;
-
+    bool meanValueChanges=false;
     public MainWindow()
     {
         InitializeComponent();
@@ -44,7 +35,7 @@ public partial class MainWindow : Window
     private void OpenFile(object sender, RoutedEventArgs e)
     {
         OpenFileDialog openFileDialog = new OpenFileDialog();
-        openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+        openFileDialog.Filter = "Image files (*.jpg;*.png)|*.jpg;*.png|All files (*.*)|*.*";
         if (openFileDialog.ShowDialog() == true)
         {
             string fileName = openFileDialog.FileName;
@@ -97,18 +88,40 @@ public partial class MainWindow : Window
     private void RedValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         RedLabel.Content = $"Red Value: {RedValue.Value}";
+        if (meanValueChanges)
+            return;
 
     }
 
     private void BlueValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         BlueLabel.Content = $"Blue Value: {BlueValue.Value}";
-
+        if (meanValueChanges)
+            return;
     }
 
     private void GreenValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         GreenLabel.Content = $"Green Value: {GreenValue.Value}";
+        if (meanValueChanges)
+            return;
+        if (this.flag == BitmapFlags.Image)
+        {
+            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(this.sourceImage, (byte)GreenValue.Value,  2));
 
+        }
+    }
+
+    private void MeanValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        meanValueChanges = true;
+        MeanLabel.Content = $"Mean Value: {MeanValue.Value}";
+        GreenValue.Value = RedValue.Value = BlueValue.Value = MeanValue.Value;
+        if (this.flag == BitmapFlags.Image)
+        {
+            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(this.sourceImage, (byte)MeanValue.Value, 4));
+
+        }
+        meanValueChanges = false;
     }
 }
