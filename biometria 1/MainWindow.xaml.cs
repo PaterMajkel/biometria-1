@@ -103,10 +103,9 @@ public partial class MainWindow : Window
 
     private void RedValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        RedLabel.Content = $"Red Value: {RedValue.Value}";
+        RedLabel.Content = $"Red Value: {Math.Round(RedValue.Value).ToString()}";
         if (meanValueChanges)
             return;
-        RedLabel.Content = $"Red Value: {Math.Round(RedValue.Value).ToString()}";
 
         if (this.flag == BitmapFlags.Image)
         {
@@ -119,7 +118,7 @@ public partial class MainWindow : Window
 
     private void BlueValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        BlueLabel.Content = $"Blue Value: {BlueValue.Value}";
+        BlueLabel.Content = $"Blue Value: {Math.Round(BlueValue.Value).ToString()}";
         if (meanValueChanges)
             return;
         if (this.flag == BitmapFlags.Image)
@@ -134,7 +133,7 @@ public partial class MainWindow : Window
 
     private void GreenValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        GreenLabel.Content = $"Green Value: {GreenValue.Value}";
+        GreenLabel.Content = $"Green Value: {Math.Round(GreenValue.Value).ToString()}";
         if (meanValueChanges)
             return;
         if (this.flag == BitmapFlags.Image)
@@ -149,7 +148,7 @@ public partial class MainWindow : Window
     private void MeanValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         meanValueChanges = true;
-        MeanLabel.Content = $"Mean Value: {MeanValue.Value}";
+        MeanLabel.Content = $"Mean Value: {Math.Round(MeanValue.Value).ToString()}";
         GreenValue.Value = RedValue.Value = BlueValue.Value = MeanValue.Value;
         if (this.flag == BitmapFlags.Image)
         {
