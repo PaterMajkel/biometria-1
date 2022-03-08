@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 
+namespace biometria_1;
+
 public static class Algorithm
 {
     public static Bitmap Histogram(Bitmap bmp)
@@ -45,7 +47,7 @@ public static class Algorithm
         return bmp;
     }
 
-    public static Bitmap BinaryThreshold(Bitmap bmp, byte threshold)
+    public static Bitmap BinaryThreshold(Bitmap bmp, byte threshold, int canal = 3)
     {
         var data = bmp.LockBits(
             new Rectangle(0, 0, bmp.Width, bmp.Height),
@@ -72,13 +74,45 @@ public static class Algorithm
             byte g = bmpData[i + 1];
             byte b = bmpData[i + 2];
 
-            byte mean = (byte)((r + g + b) / 3);
+            switch (canal)
+            {
+                case 0:
+                    {
+                        bmpData[i + 0] =
+                        r > threshold
+                            ? byte.MaxValue
+                            : byte.MinValue;
+                        break;
+                    }
+                case 1:
+                    {
+                        bmpData[i + 1] =
+                        g > threshold
+                            ? byte.MaxValue
+                            : byte.MinValue;
+                        break;
+                    }
+                case 2:
+                    {
+                        bmpData[i + 1] =
+                        b > threshold
+                            ? byte.MaxValue
+                            : byte.MinValue;
+                        break;
+                    }
+                default:
+                    {
+                        byte mean = (byte)((r + g + b) / 3);
 
-            bmpData[i + 0] =
-            bmpData[i + 1] =
-            bmpData[i + 2] = mean > threshold
-                ? byte.MaxValue
-                : byte.MinValue;
+                        bmpData[i + 0] =
+                        bmpData[i + 1] =
+                        bmpData[i + 2] = mean > threshold
+                            ? byte.MaxValue
+                            : byte.MinValue;
+                        break;
+                    }
+            }
+                
         }
 
         Marshal.Copy(bmpData, 0, data.Scan0, bmpData.Length);
