@@ -19,7 +19,7 @@ public static class Algorithm
         // Przerzuci z Bitmapy do tablicy
 
         int[] histogram = new int[256];
-        for (int i = canal%3; i < bmpData.Length; i+=canal==3?1:3)
+        for (int i = canal % 3; i < bmpData.Length; i += canal == 3 ? 1 : 3)
         {
             ++histogram[bmpData[i]];
         }
@@ -114,7 +114,7 @@ public static class Algorithm
                         break;
                     }
             }
-                
+
         }
 
         Marshal.Copy(bmpData, 0, data.Scan0, bmpData.Length);
