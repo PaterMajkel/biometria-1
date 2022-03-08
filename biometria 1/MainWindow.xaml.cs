@@ -79,8 +79,8 @@ public partial class MainWindow : Window
                 case ".jpg":
                     format = ImageFormat.Jpeg;
                     break;
-                case ".bmp":
-                    format = ImageFormat.Bmp;
+                case ".png":
+                    format = ImageFormat.Png;
                     break;
             }
             finalImage.Save(saveFileDialog.FileName, format);
