@@ -16,8 +16,8 @@
                 <MenuItem Header="_Exit" Click="Exit" />
             </MenuItem>
             <MenuItem Header="_Mode">
-                <MenuItem Header="_Histogram" />
-                <MenuItem Header="_Image" />
+                <MenuItem Header="_Histogram" Click="SetFlagToHistogram"/>
+                <MenuItem Header="_Image" Click="SetFlagToImage"/>
             </MenuItem>
         </Menu>
 
@@ -30,10 +30,11 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
 
-            <Image Name="ReadyImage" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Stretch="Fill"></Image>
+            <Image Name="ReadyImage" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Stretch="Fill"></Image>
 
             <Slider Name="RedValue" Grid.Row="0" Grid.Column="1" Margin="0,40,0,0"></Slider>
             <Label Name="RedLabel" Grid.Row="0" Grid.Column="1" Content="Red Value: 0"/>
@@ -43,6 +44,9 @@
 
             <Slider Name="GreenValue" Grid.Row="2" Grid.Column="1" Margin="0,40,0,0"></Slider>
             <Label  Name="GreenLabel" Grid.Row="2" Grid.Column="1" Content="Green Value: 0"/>
+
+            <Slider Name="MeanValue" Grid.Row="2" Grid.Column="1" Margin="0,40,0,0"></Slider>
+            <Label  Name="MeanLabel" Grid.Row="3" Grid.Column="1" Content="Mean Value: 0"/>
         </Grid>
     </DockPanel>
 

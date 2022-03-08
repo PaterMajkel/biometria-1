@@ -20,6 +20,12 @@ using System.Windows.Shapes;
 
 namespace biometria_1;
 
+public enum BitmapFlags
+{
+    Image=1,
+    Histogram=2,
+}
+
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
@@ -28,6 +34,7 @@ public partial class MainWindow : Window
 
     string fileType = "";
     Bitmap sourceImage = null;
+    BitmapFlags flag = BitmapFlags.Image;
 
     public MainWindow()
     {
@@ -75,5 +82,15 @@ public partial class MainWindow : Window
     private void Exit(object sender, RoutedEventArgs e)
     {
         this.Close();
+    }
+
+    private void SetFlagToHistogram(object sender, RoutedEventArgs e)
+    {
+        flag = BitmapFlags.Histogram;
+    }
+
+    private void SetFlagToImage(object sender, RoutedEventArgs e)
+    {
+        flag = BitmapFlags.Image;
     }
 }
