@@ -35,13 +35,13 @@
 
             <Image Name="ReadyImage" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Source="kot.jpg" Stretch="Fill"></Image>
 
-            <Slider Name="RedValue" Grid.Row="0" Grid.Column="1" Margin="0,40,0,0"></Slider>
+            <Slider Name="RedValue" Grid.Row="0" Grid.Column="1" Margin="0,40,0,0" Minimum="0" Maximum="255" ValueChanged="RedValue_ValueChanged"></Slider>
             <Label Name="RedLabel" Grid.Row="0" Grid.Column="1" Content="Red Value: 0"/>
 
-            <Slider Name="BlueValue" Grid.Row="1" Grid.Column="1" Margin="0,40,0,0"></Slider>
+            <Slider Name="BlueValue" Grid.Row="1" Grid.Column="1" Margin="0,40,0,0" Minimum="0" Maximum="255" ValueChanged="BlueValue_ValueChanged"></Slider>
             <Label Name="BlueLabel" Grid.Row="1" Grid.Column="1" Content="Blue Value: 0"/>
 
-            <Slider Name="GreenValue" Grid.Row="2" Grid.Column="1" Margin="0,40,0,0"></Slider>
+            <Slider Name="GreenValue" Grid.Row="2" Grid.Column="1" Margin="0,40,0,0" Minimum="0" Maximum="255" ValueChanged="GreenValue_ValueChanged"></Slider>
             <Label  Name="GreenLabel" Grid.Row="2" Grid.Column="1" Content="Green Value: 0"/>
         </Grid>
     </DockPanel>

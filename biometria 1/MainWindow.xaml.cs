@@ -56,4 +56,22 @@ public partial class MainWindow : Window
         }
         finally { DeleteObject(handle); }
     }
+
+    private void RedValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        RedLabel.Content = $"Red Value: {RedValue.Value}";
+
+    }
+
+    private void BlueValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        BlueLabel.Content = $"Blue Value: {BlueValue.Value}";
+
+    }
+
+    private void GreenValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        GreenLabel.Content = $"Green Value: {GreenValue.Value}";
+
+    }
 }
