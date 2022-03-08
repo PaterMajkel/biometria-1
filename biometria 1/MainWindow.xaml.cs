@@ -106,6 +106,8 @@ public partial class MainWindow : Window
         RedLabel.Content = $"Red Value: {RedValue.Value}";
         if (meanValueChanges)
             return;
+        RedLabel.Content = $"Red Value: {Math.Round(RedValue.Value).ToString()}";
+
         if (this.flag == BitmapFlags.Image)
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
