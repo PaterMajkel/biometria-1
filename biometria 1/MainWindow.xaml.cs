@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -26,6 +27,7 @@ public partial class MainWindow : Window
     string fileType = "";
     Bitmap sourceImage = null;
     BitmapFlags flag = BitmapFlags.Image;
+    Bitmap finalImage;
     bool meanValueChanges=false;
     public MainWindow()
     {
@@ -66,8 +68,22 @@ public partial class MainWindow : Window
             return;
         }
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+        saveFileDialog.Filter = "Images|*.png;*.bmp;*.jpg";
+        ImageFormat format = ImageFormat.Png;
         if (saveFileDialog.ShowDialog() == true)
-            sourceImage.Save(saveFileDialog.FileName+this.fileType);
+        {
+            string ext = System.IO.Path.GetExtension(saveFileDialog.FileName);
+            switch (ext)
+            {
+                case ".jpg":
+                    format = ImageFormat.Jpeg;
+                    break;
+                case ".bmp":
+                    format = ImageFormat.Bmp;
+                    break;
+            }
+            finalImage.Save(saveFileDialog.FileName, format);
+        }
     }
 
     private void Exit(object sender, RoutedEventArgs e)
@@ -94,8 +110,8 @@ public partial class MainWindow : Window
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)RedValue.Value, 2));
-
+            finalImage=BinaryThreshold(bitmap, (byte)RedValue.Value, 2);
+            ReadyImage.Source = ImageSourceFromBitmap(finalImage);
         }
     }
 
@@ -108,7 +124,8 @@ public partial class MainWindow : Window
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)BlueValue.Value, 0));
+            finalImage=BinaryThreshold(bitmap, (byte)BlueValue.Value, 0);
+            ReadyImage.Source = ImageSourceFromBitmap(finalImage);
 
         }
     }
@@ -122,8 +139,8 @@ public partial class MainWindow : Window
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)GreenValue.Value,  1));
-
+            finalImage=BinaryThreshold(bitmap, (byte)GreenValue.Value,  1);
+            ReadyImage.Source = ImageSourceFromBitmap(finalImage);
         }
     }
 
@@ -136,8 +153,8 @@ public partial class MainWindow : Window
         {
             Bitmap bitmap = new Bitmap(this.sourceImage.Width, this.sourceImage.Height);
             bitmap = (Bitmap)this.sourceImage.Clone();
-            ReadyImage.Source = ImageSourceFromBitmap(BinaryThreshold(bitmap, (byte)MeanValue.Value));
-
+            finalImage = BinaryThreshold(bitmap, (byte)MeanValue.Value);
+            ReadyImage.Source = ImageSourceFromBitmap(finalImage);
         }
         meanValueChanges = false;
     }
