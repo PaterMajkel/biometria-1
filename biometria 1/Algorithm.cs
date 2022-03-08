@@ -6,7 +6,7 @@ namespace biometria_1;
 
 public static class Algorithm
 {
-    public static Bitmap Histogram(Bitmap bmp)
+    public static Bitmap Histogram(Bitmap bmp, int canal = 3)
     {
         var data = bmp.LockBits(
             new Rectangle(0, 0, bmp.Width, bmp.Height),
@@ -19,8 +19,10 @@ public static class Algorithm
         // Przerzuci z Bitmapy do tablicy
 
         int[] histogram = new int[256];
-        foreach (byte i in bmpData)
-            ++histogram[i];
+        for (int i = canal%3; i < bmpData.Length; i+=canal==3?1:3)
+        {
+            ++histogram[bmpData[i]];
+        }
         double max = histogram.Max();
         for (int i = 0; i < histogram.Length; i++)
             histogram[i] = (int)(histogram[i] / max * 512.0);

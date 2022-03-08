@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:biometria_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="850">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -21,10 +21,12 @@
             </MenuItem>
         </Menu>
 
-        <Grid>
+        <Grid Name="GridMenu">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -47,6 +49,11 @@
 
             <Slider Name="MeanValue" Grid.Row="3" Grid.Column="1" Margin="0,40,0,0" Minimum="0" Maximum="255" ValueChanged="MeanValue_ValueChanged"></Slider>
             <Label  Name="MeanLabel" Grid.Row="3" Grid.Column="1" Content="Mean Value: 0" Margin="0,0,0,75"/>
+
+            <Button Name="RedButton" Grid.Row="0" Grid.Column="3" Content="Red&#x0a;Histogram" Click="RedBtn"></Button>
+            <Button Name="BlueButton" Grid.Row="1" Grid.Column="3" Content="Blue&#x0a;Histogram" Click="BlueBtn"></Button>
+            <Button Name="GreenButton" Grid.Row="2" Grid.Column="3" Content="Green&#x0a;Histogram" Click="GreenBtn"></Button>
+            <Button Name="MeanButton" Grid.Row="3" Grid.Column="3" Content="Mean&#x0a;Histogram" Click="MeanBtn"></Button>
         </Grid>
     </DockPanel>
 
