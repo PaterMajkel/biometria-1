@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -70,51 +71,33 @@ public static class Algorithm
         Marshal.Copy(data.Scan0, bmpData, 0, bmpData.Length);
         // Przerzuci z Bitmapy do tablicy
 
+        Func<byte, byte, byte, byte> binarization =
+            canal == 0 ? (r, g, b) => r > threshold ? byte.MaxValue : byte.MinValue
+            : canal == 1 ? (r, g, b) => g > threshold ? byte.MaxValue : byte.MinValue
+            : canal == 2 ? (r, g, b) => b > threshold ? byte.MaxValue : byte.MinValue
+            : (r, g, b) => (byte)((r + g + b) / 3) > threshold ? byte.MaxValue : byte.MinValue;
+
+        int[] canalIndex;
+        if(canal == 2)
+            canalIndex = new int[] { 2, 2, 2 };
+        else if(canal == 0)
+            canalIndex = new int[] { 0, 0, 0 };
+        else if(canal == 1)
+            canalIndex = new int[] { 1, 1, 1 };
+        else
+            canalIndex = new int[] { 0, 1, 2 };
+
         for (int i = 0; i < bmpData.Length; i += 3)
         {
             byte r = bmpData[i + 0];
             byte g = bmpData[i + 1];
             byte b = bmpData[i + 2];
 
-            switch (canal)
-            {
-                case 0:
-                    {
-                        bmpData[i + 0] =
-                        r > threshold
-                            ? byte.MaxValue
-                            : byte.MinValue;
-                        break;
-                    }
-                case 1:
-                    {
-                        bmpData[i + 1] =
-                        g > threshold
-                            ? byte.MaxValue
-                            : byte.MinValue;
-                        break;
-                    }
-                case 2:
-                    {
-                        bmpData[i + 2] =
-                        b > threshold
-                            ? byte.MaxValue
-                            : byte.MinValue;
-                        break;
-                    }
-                default:
-                    {
-                        byte mean = (byte)((r + g + b) / 3);
 
-                        bmpData[i + 0] =
-                        bmpData[i + 1] =
-                        bmpData[i + 2] = mean > threshold
-                            ? byte.MaxValue
-                            : byte.MinValue;
-                        break;
-                    }
-            }
-
+            bmpData[i + canalIndex[0]] =
+            bmpData[i + canalIndex[1]] =
+            bmpData[i + canalIndex[2]] = binarization(r, g, b);
+        
         }
 
         Marshal.Copy(bmpData, 0, data.Scan0, bmpData.Length);
